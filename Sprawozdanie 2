@@ -1,0 +1,49 @@
+1. Zmodyfikować program aby przesłać wartość liczbową Int16
+
+#define USE_USBCON
+#include <std_msgs/Int16.h>
+
+ros::NodeHandle nh;
+std_msg::Int16 int msg;
+ros::Publisher chatter("chatter", &int_msg);
+
+void setup()
+{
+nh.initNode();
+nh.advertise(chatter);
+}
+
+void loop()
+{
+int_msg.data=16;
+chatter.publish(&int_msg);
+nh.spinOnce();
+
+delay(1000);
+}
+
+2. Połączyc czujnik/ potencjometr podany przez prowadzącego oraz przedstawić pomiary z niego w systemie ROS (rqt_plot) lub w Matlabie.
+
+#define USE_USBCON
+#include <std_msgs/Int16.h>
+
+ros::NodeHandle nh;
+std_msg::Int16 int msg;
+ros::Publisher chatter("chatter", &int_msg);
+
+int analogPin=0;
+
+void setup()
+{
+nh.initNode();
+nh.advertise(chatter);
+}
+
+void loop()
+{
+int_msg.data=analogRead(analogPin);
+chatter.publish(&int_msg);
+nh.spinOnce();
+
+delay(50);
+}

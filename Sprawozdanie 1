@@ -7,7 +7,7 @@ function message = sendMessage(pub, x, theta)
 message = rosmessage('geometry_msgs/Twist');
 message.Linear.X = x;
 message.Angular.Z = theta;
-send(pub,msg);
+send(pub,message);
 end
 
 --------------------------------------------------------

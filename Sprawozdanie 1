@@ -1,0 +1,33 @@
+%% Sterowanie złożonymi układami mechanicznymi
+%% Marcin Łukasiewicz 36744 AiR 4 rok
+
+
+-------------------------------------------------------
+function message = sendMessage(pub, x, theta)
+message = rosmessage('geometry_msgs/Twist');
+message.Linear.X = x;
+message.Angular.Z = theta;
+send(pub,msg);
+end
+
+--------------------------------------------------------
+
+
+
+
+
+
+-------------------------------------------------------------
+pub = rospublisher('/turtle1/cmd_vel','geometry_msgs/Twist');
+sub = rossubscriber('/turtle1/pose');
+for j = 1:1:100
+	sendMessage(pub,3,pi/2); 
+	message = receive(sub);
+	hold on;
+	drawnow;
+	plot(sub.LatestMessage.X, sub.LatestMessage.Y,'b.');
+	daspect([10 10 10])
+end
+---------------------------------------------------------------
+
+

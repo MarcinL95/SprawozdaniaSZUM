@@ -1,0 +1,48 @@
+
+L = 10; 
+teta = pi; 
+x = 0; 
+y = 0; 
+ZmianaX=0; 
+ZmianaY=0; 
+% promień kół 
+R = 2 ; 
+% wypełnienie PWM dla koła 1 
+kolo1 = 100/255; 
+% wypełnienie PWM dla koła 2 
+kolo2 = 90/255; 
+
+% rysowanie położenia robota
+while(1)
+    % wypełnienie PWM w procentach dla koła 1
+    PWM1 = kolo1*100; 
+    % wypełnienie PWM w procentach dla koła 2
+    PWM2 = kolo2*100; 
+    % prędkość kątowa dla koła 1 
+    ZmianaTeta1 = kolo1*teta; 
+    % prędkość kątowa dla koła 2 
+    ZmianaTeta2 = kolo2*teta; 
+    
+    ZmianaX = (ZmianaTeta1+ZmianaTeta2) * R / 2  * cos(teta) * 0.01; 
+    ZmianaY = (ZmianaTeta1+ZmianaTeta2) * R / 2  * sin(teta) * 0.01;
+    ZmianaTeta = R * (ZmianaTeta2 - ZmianaTeta1) / L * 0.01; 
+    % wyliczenie zmiany położenia w osi X
+    x = x + ZmianaX; 
+    % wyliczenie zmiany położenia w osi Y  
+    y = y + ZmianaY;  
+    % wyliczenie zmiany kąta
+    teta= teta + ZmianaTeta; 
+    % nowe położenie robota w osi X
+    X = [ x+ZmianaX+L*sin(teta)/2 x+ZmianaX-L*sin(teta)/2]; 
+    % nowe położenie robota w osi Y
+    Y = [ y+ZmianaY-L*cos(teta)/2 y+ZmianaY+L*cos(teta)/2]; 
+    
+    plot(X,Y) 
+    axis([-100 100 -100 100]);
+    hold on
+    plot(X,Y)
+    hold on     
+    hold off
+    pause(0.01)
+        
+end
